@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:amazon_clone/features/auth/screen/auth_screen.dart';
+import 'package:amazon_clone/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -33,6 +35,8 @@ class MyApp extends StatelessWidget {
               ),
             ),
           ),
+        onGenerateRoute: (settings) => generateRoute(settings),
+        home: AuthScreen(),
         );
       },
     );
