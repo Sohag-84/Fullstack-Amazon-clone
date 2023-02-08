@@ -23,7 +23,7 @@ authRouter.post("/api/signup", async (req, res) => {
     user = await user.save();
     res.json(user);
   } catch (e) {
-    res.status(500).json({ erro: e.message });
+    res.status(500).json({ error: e.message });
   }
   //post that in database
   //return that data to the user
