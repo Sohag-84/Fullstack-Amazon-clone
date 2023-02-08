@@ -1,9 +1,12 @@
 const expreess = require("express");
 const bcryptjs = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+const { application } = require("express");
 
 const authRouter = expreess.Router();
 
+//signup api
 authRouter.post("/api/signup", async (req, res) => {
   //get data from client
   try {
@@ -25,8 +28,29 @@ authRouter.post("/api/signup", async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
-  //post that in database
-  //return that data to the user
+});
+
+// Sign In api
+authRouter.post("/api/signin", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ msg: "User with this email does not exist!" });
+    }
+
+    const isMatch = await bcryptjs.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ msg: "Incorrect password." });
+    }
+    const token = jwt.sign({ id: user._id }, "passwordKey");
+    res.json({ token, ...user._doc });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
 module.exports = authRouter; //so that access any other file

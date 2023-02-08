@@ -3,7 +3,6 @@ import 'package:amazon_clone/constants/global_variable.dart';
 import 'package:amazon_clone/constants/utils.dart';
 import 'package:amazon_clone/models/user_model.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
@@ -32,11 +31,6 @@ class AuthService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      Fluttertoast.showToast(msg: "Status code${res.statusCode}");
-      if (res.statusCode == 200) {
-        Fluttertoast.showToast(msg: "Status code${res.statusCode}");
-      }
-
       httpErrorHandle(
         response: res,
         context: context,
