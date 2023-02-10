@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-//String uri = "http://192.168.0.104:8000"; //our api uri
-String uri = Platform.isAndroid
-    ? 'http://192.168.0.104:8000'
-    : 'http://localhost:8000'; //our api uri
+String uri = "http://192.168.0.101:3000"; //our api uri
+// String uri = Platform.isAndroid
+//     ? 'http://192.168.0.104:3000'
+//     : 'http://localhost:3000'; //our api uri
 // 'http://<yourip>:3000';
 
 class GlobalVariables {
