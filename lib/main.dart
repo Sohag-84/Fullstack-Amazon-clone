@@ -2,7 +2,7 @@
 
 import 'package:amazon_clone/features/auth/screen/auth_screen.dart';
 import 'package:amazon_clone/features/auth/services/auth_services.dart';
-import 'package:amazon_clone/features/home/home_screen.dart';
+import 'package:amazon_clone/features/widgets/bottom_bar.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:amazon_clone/routes.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
           ),
           onGenerateRoute: (settings) => generateRoute(settings),
           home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-              ? HomeScreen()
+              ? BottomBar()
               : AuthScreen(),
         );
       },
