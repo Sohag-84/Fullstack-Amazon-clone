@@ -3,6 +3,7 @@
 import 'package:amazon_clone/constants/global_variable.dart';
 import 'package:amazon_clone/features/home/widgets/address_box.dart';
 import 'package:amazon_clone/features/home/widgets/carousel_image.dart';
+import 'package:amazon_clone/features/home/widgets/deal_of_day.dart';
 import 'package:amazon_clone/features/home/widgets/top_categories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -60,7 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               BorderSide(color: Colors.black38, width: 1.w),
                         ),
                         hintText: "Search product",
-                        hintStyle: TextStyle(fontWeight: FontWeight.w500,fontSize: 17.sp,),
+                        hintStyle: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 17.sp,
+                        ),
                       ),
                     ),
                   ),
@@ -70,20 +74,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 42.h,
                 color: Colors.transparent,
                 margin: EdgeInsets.symmetric(horizontal: 10.w),
-                child: Icon(Icons.mic,color: Colors.black,size: 25.h,),
+                child: Icon(
+                  Icons.mic,
+                  color: Colors.black,
+                  size: 25.h,
+                ),
               )
             ],
           ),
         ),
       ),
-      body: Column(
-        children: [
-          AddressBox(),
-          SizedBox(height: 10.h),
-          TopCategories(),
-          SizedBox(height: 10.h),
-          CarouselImage()
-        ],
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            AddressBox(),
+            SizedBox(height: 10.h),
+            TopCategories(),
+            SizedBox(height: 10.h),
+            CarouselImage(),
+            DealOfDay()
+          ],
+        ),
       ),
     );
   }
