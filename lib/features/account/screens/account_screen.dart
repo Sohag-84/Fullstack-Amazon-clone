@@ -2,6 +2,7 @@
 
 import 'package:amazon_clone/constants/global_variable.dart';
 import 'package:amazon_clone/features/account/widgets/bellow_app_bar.dart';
+import 'package:amazon_clone/features/account/widgets/top_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -53,7 +54,12 @@ class _AccountScreenState extends State<AccountScreen> {
         ),
       ),
       body: Column(
-        children: [BelowAppBar()],
+        children: [
+          BelowAppBar(),
+          SizedBox(height: 10.h),
+          TopButtons(),
+          SizedBox(height: 10.h),
+        ],
       ),
     );
   }
