@@ -2,7 +2,7 @@
 
 import 'package:amazon_clone/constants/global_variable.dart';
 import 'package:amazon_clone/features/account/screens/account_screen.dart';
-import 'package:amazon_clone/features/home/home_screen.dart';
+import 'package:amazon_clone/features/home/screens/home_screen.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

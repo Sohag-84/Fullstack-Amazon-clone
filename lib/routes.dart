@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:amazon_clone/features/auth/screen/auth_screen.dart';
-import 'package:amazon_clone/features/home/home_screen.dart';
+import 'package:amazon_clone/features/home/screens/home_screen.dart';
 import 'package:amazon_clone/features/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';
 
