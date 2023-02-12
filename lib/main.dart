@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import 'constants/global_variable.dart';
+import 'features/admin/screens/admin_screen.dart';
 
 void main() {
   runApp(MultiProvider(
@@ -60,8 +61,10 @@ class _MyAppState extends State<MyApp> {
           ),
           onGenerateRoute: (settings) => generateRoute(settings),
           home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-              ? BottomBar()
-              : AuthScreen(),
+              ? Provider.of<UserProvider>(context).user.type == 'user'
+                  ? const BottomBar()
+                  : const AdminScreen()
+              : const AuthScreen(),
         );
       },
     );
