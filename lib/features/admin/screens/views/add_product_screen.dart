@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:amazon_clone/common/widgets/custom_text_field.dart';
 import 'package:amazon_clone/constants/utils.dart';
-import 'package:carousel_slider/carousel_options.dart';
+import 'package:amazon_clone/features/admin/services/admin_services.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -26,9 +26,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final descriptionController = TextEditingController();
   final priceController = TextEditingController();
   final quantityController = TextEditingController();
+  final AdminServices adminServices = AdminServices();
 
   String category = 'Mobiles';
   List<File> images = [];
+  final _addPorductFormKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -46,6 +48,20 @@ class _AddProductScreenState extends State<AddProductScreen> {
     'Books',
     'Fashion'
   ];
+
+  void sellProduct() {
+    if (_addPorductFormKey.currentState!.validate() && images.isNotEmpty) {
+      adminServices.sellProduct(
+        context: context,
+        name: productNameController.text,
+        description: descriptionController.text,
+        price: double.parse(priceController.text),
+        quantity: double.parse(quantityController.text),
+        category: category,
+        images: images,
+      );
+    }
+  }
 
   selectImages() async {
     final res = await pickImages();
@@ -71,6 +87,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       ),
       body: SingleChildScrollView(
         child: Form(
+          key: _addPorductFormKey,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.w),
             child: Column(
@@ -168,7 +185,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 SizedBox(height: 10.h),
                 CustomButton(
                   text: 'Sell',
-                  onTap: () {},
+                  onTap: sellProduct,
                 ),
                 SizedBox(height: 10.h),
               ],
