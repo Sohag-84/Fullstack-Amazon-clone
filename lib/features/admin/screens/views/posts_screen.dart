@@ -1,7 +1,14 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
+import 'package:amazon_clone/common/widgets/loader.dart';
+import 'package:amazon_clone/features/account/widgets/single_product.dart';
+import 'package:amazon_clone/features/admin/screens/admin_screen.dart';
 import 'package:amazon_clone/features/admin/screens/views/add_product_screen.dart';
+import 'package:amazon_clone/features/admin/services/admin_services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../models/product_model.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({Key? key}) : super(key: key);
@@ -11,18 +18,71 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
+  AdminServices adminServices = AdminServices();
+  List<Product>? products;
+
+  fetchProducts() async {
+    products = await adminServices.fetchAllProducts(context);
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProducts();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text("Posts screen")),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, AddProductScreen.routeName);
-        },
-        child: Icon(Icons.add),
-        tooltip: "Add a product",
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-    );
+    return products == null
+        ? Loader()
+        : Scaffold(
+            body: Padding(
+              padding: EdgeInsets.all(8.w),
+              child: GridView.builder(
+                  itemCount: products!.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: .8,
+                    mainAxisSpacing: 5.h,
+                    crossAxisSpacing: 5.w,
+                  ),
+                  itemBuilder: (context, index) {
+                    var productData = products![index];
+                    return Column(
+                      children: [
+                        SingleProduct(
+                          image: productData.images[0],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                productData.name,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.delete_outline),
+                            ),
+                          ],
+                        )
+                      ],
+                    );
+                  }),
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                Navigator.pushNamed(context, AddProductScreen.routeName);
+              },
+              child: Icon(Icons.add),
+              tooltip: "Add a product",
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+          );
   }
 }
