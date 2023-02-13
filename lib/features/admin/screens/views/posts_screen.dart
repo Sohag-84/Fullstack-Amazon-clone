@@ -62,8 +62,11 @@ class _PostScreenState extends State<PostScreen> {
                     var productData = products![index];
                     return Column(
                       children: [
-                        SingleProduct(
-                          image: productData.images[0],
+                        SizedBox(
+                          height: 140.h,
+                          child: SingleProduct(
+                            image: productData.images[0],
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
