@@ -26,6 +26,17 @@ class _PostScreenState extends State<PostScreen> {
     setState(() {});
   }
 
+  //delete product
+  deleteProduct({required Product product, required index}) {
+    adminServices.deleteProduct(
+        context: context,
+        product: product,
+        onSuccess: () {
+          products!.removeAt(index);
+          setState(() {});
+        });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -65,7 +76,10 @@ class _PostScreenState extends State<PostScreen> {
                               ),
                             ),
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () => deleteProduct(
+                                index: index,
+                                product: productData,
+                              ),
                               icon: Icon(Icons.delete_outline),
                             ),
                           ],

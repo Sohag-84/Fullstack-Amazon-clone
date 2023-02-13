@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -67,31 +69,58 @@ class AdminServices {
   Future<List<Product>> fetchAllProducts(BuildContext context) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     List<Product> productList = [];
-
-    http.Response response = await http.get(
-      Uri.parse("$uri/admin/get-product"),
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'x-auth-token': userProvider.user.token,
-      },
-    );
-    httpErrorHandle(
-      response: response,
-      context: context,
-      onSuccess: () {
-        for (var i = 0; i < jsonDecode(response.body).length; i++) {
-          productList.add(
-            Product.fromJson(
-              jsonEncode(jsonDecode(response.body)[i]),
-            ),
-          );
-        }
-      },
-    );
-
-    try {} catch (e) {
+    try {
+      http.Response response = await http.get(
+        Uri.parse("$uri/admin/get-product"),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+      );
+      httpErrorHandle(
+        response: response,
+        context: context,
+        onSuccess: () {
+          for (var i = 0; i < jsonDecode(response.body).length; i++) {
+            productList.add(
+              Product.fromJson(
+                jsonEncode(jsonDecode(response.body)[i]),
+              ),
+            );
+          }
+        },
+      );
+    } catch (e) {
       showSnackBar(context, e.toString());
     }
     return productList;
+  }
+
+  //delete prodruct
+  void deleteProduct({
+    required BuildContext context,
+    required Product product,
+    required VoidCallback onSuccess,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response response = await http.post(
+        Uri.parse("$uri/admin/delete-product"),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode({
+          "id": product.id,
+        }),
+      );
+      httpErrorHandle(
+        response: response,
+        context: context,
+        onSuccess: onSuccess,
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
   }
 }
