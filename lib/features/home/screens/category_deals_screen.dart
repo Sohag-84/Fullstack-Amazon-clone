@@ -3,6 +3,7 @@
 import 'package:amazon_clone/common/widgets/loader.dart';
 import 'package:amazon_clone/constants/global_variable.dart';
 import 'package:amazon_clone/features/home/services/home_services.dart';
+import 'package:amazon_clone/features/product_details/screens/product_details_screen.dart';
 import 'package:amazon_clone/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,6 +34,11 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
       category: widget.category,
     );
     setState(() {});
+  }
+
+  navigateToProductDetailsScreen() {
+    Navigator.pushNamed(context, ProductDetailsScreen.routeName,
+        arguments: productList);
   }
 
   @override
@@ -80,32 +86,35 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
                     ),
                     itemBuilder: (context, index) {
                       var productData = productList![index];
-                      return Column(
-                        children: [
-                          SizedBox(
-                            height: 120.h,
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Colors.black, width: 0.5.w),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(5.w),
-                                child: Image.network(productData.images[0]),
+                      return GestureDetector(
+                        onTap: () => Navigator.pushNamed(context, ProductDetailsScreen.routeName,arguments: productData,),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 120.h,
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.black, width: 0.5.w),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(5.w),
+                                  child: Image.network(productData.images[0]),
+                                ),
                               ),
                             ),
-                          ),
-                          Container(
-                            alignment: Alignment.topLeft,
-                            padding:
-                                EdgeInsets.only(left: 0, top: 5.h, right: 15.w),
-                            child: Text(
-                              productData.name,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                            Container(
+                              alignment: Alignment.topLeft,
+                              padding: EdgeInsets.only(
+                                  left: 0, top: 5.h, right: 15.w),
+                              child: Text(
+                                productData.name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       );
                     },
                   ),
