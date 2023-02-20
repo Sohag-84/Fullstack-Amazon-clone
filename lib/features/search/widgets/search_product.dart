@@ -11,6 +11,14 @@ class SearchProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double totalRating = 0;
+    double avgRating = 0;
+    for (int i = 0; i < product.rating!.length; i++) {
+      totalRating += product.rating![i].rating;
+    }
+    if (totalRating != 0) {
+      avgRating = totalRating / product.rating!.length;
+    }
     return Column(
       children: [
         Container(
@@ -21,7 +29,7 @@ class SearchProduct extends StatelessWidget {
                 product.images[0],
                 height: 135.h,
                 width: 135.w,
-                fit: BoxFit.fitWidth,
+                fit: BoxFit.contain,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,14 +47,15 @@ class SearchProduct extends StatelessWidget {
                   Container(
                     width: 200.w,
                     padding: EdgeInsets.only(left: 10.w, top: 5.h),
-                    child: Stars(rating: 4.5),
+                    child: Stars(rating: avgRating),
                   ),
                   Container(
                     width: 200.w,
                     padding: EdgeInsets.only(left: 10.w, top: 5.h),
                     child: Text(
                       "\$${product.price}",
-                      style: TextStyle(fontSize: 16.sp,fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 16.sp, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Container(

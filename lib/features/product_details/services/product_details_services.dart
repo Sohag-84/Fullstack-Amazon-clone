@@ -26,7 +26,7 @@ class ProducDetailsServices {
         },
         body: jsonEncode({
           "id": product.id,
-          "rating": rating,
+          "rating": rating * 1.0,
         }),
       );
       httpErrorHandle(response: response, context: context, onSuccess: () {});

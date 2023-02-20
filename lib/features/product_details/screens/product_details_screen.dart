@@ -4,12 +4,14 @@
 import 'package:amazon_clone/common/widgets/custom_button.dart';
 import 'package:amazon_clone/common/widgets/star.dart';
 import 'package:amazon_clone/features/product_details/services/product_details_services.dart';
+import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:amazon_clone/models/product_model.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants/global_variable.dart';
 import '../../search/screens/search_screen.dart';
@@ -27,6 +29,28 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  double avgRating = 0;
+  double myRating = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+
+    double totalRating = 0;
+    for (int i = 0; i < widget.product.rating!.length; i++) {
+      totalRating += widget.product.rating![i].rating;
+
+      if (widget.product.rating![i].userId == userProvider.user.id) {
+        myRating = widget.product.rating![i].rating;
+      }
+    }
+    if (totalRating != 0) {
+      avgRating = totalRating / widget.product.rating!.length;
+    }
+  }
+
   navigateToSearchScreen(searchQuery) {
     Navigator.pushNamed(
       context,
@@ -114,7 +138,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(widget.product.id!),
-                  Stars(rating: 4.5),
+                  Stars(rating: avgRating),
                 ],
               ),
               SizedBox(height: 10.h),
@@ -183,7 +207,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ),
               ),
               RatingBar.builder(
-                initialRating: 0,
+                initialRating: myRating,
                 allowHalfRating: true,
                 minRating: 1,
                 itemCount: 5,
