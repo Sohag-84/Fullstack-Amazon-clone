@@ -51,6 +51,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     }
   }
 
+  addTocart() {
+    ProducDetailsServices().addToCart(
+      context: context,
+      product: widget.product,
+    );
+  }
+
   navigateToSearchScreen(searchQuery) {
     Navigator.pushNamed(
       context,
@@ -195,7 +202,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               CustomButton(
                 text: "Add to Cart",
                 color: Color.fromRGBO(254, 216, 19, 1),
-                onTap: () {},
+                onTap: () {
+                  addTocart();
+                },
               ),
               SizedBox(height: 10.h),
               Divider(color: Colors.black12),
