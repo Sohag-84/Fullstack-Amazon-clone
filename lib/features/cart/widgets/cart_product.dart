@@ -19,6 +19,11 @@ class CartProduct extends StatefulWidget {
 }
 
 class _CartProductState extends State<CartProduct> {
+  ProducDetailsServices producDetailsServices = ProducDetailsServices();
+  increaseQantity({required Product product}) {
+    producDetailsServices.addToCart(context: context, product: product);
+  }
+
   @override
   Widget build(BuildContext context) {
     final productCart = context.watch<UserProvider>().user.cart[widget.index];
@@ -116,7 +121,7 @@ class _CartProductState extends State<CartProduct> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () => increaseQantity(product: product),
                       child: Container(
                         width: 35.w,
                         height: 32.h,
