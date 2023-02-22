@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:amazon_clone/common/widgets/custom_button.dart';
+import 'package:amazon_clone/features/address/screens/address_screen.dart';
 import 'package:amazon_clone/features/cart/widgets/cart_product.dart';
 import 'package:amazon_clone/features/cart/widgets/cart_subtotal.dart';
 import 'package:amazon_clone/features/home/widgets/address_box.dart';
@@ -25,6 +26,12 @@ class _CartScreenState extends State<CartScreen> {
       context,
       SearchScreen.routeName,
       arguments: searchQuery,
+    );
+  }
+  navigateToAddressScreen() {
+    Navigator.pushNamed(
+      context,
+      AddressScreen.routeName,
     );
   }
 
@@ -104,7 +111,7 @@ class _CartScreenState extends State<CartScreen> {
             padding: EdgeInsets.all(8.w),
             child: CustomButton(
               text: "Proceed to buy ${user.cart.length} item",
-              onTap: () {},
+              onTap: navigateToAddressScreen,
               color: Colors.yellow[600],
             ),
           ),
@@ -120,6 +127,7 @@ class _CartScreenState extends State<CartScreen> {
           )
         ],
       ),
+      
     );
   }
 }
