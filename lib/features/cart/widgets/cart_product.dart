@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:amazon_clone/features/cart/services/cart_services.dart';
 import 'package:amazon_clone/features/product_details/services/product_details_services.dart';
 import 'package:amazon_clone/models/product_model.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
@@ -20,8 +21,14 @@ class CartProduct extends StatefulWidget {
 
 class _CartProductState extends State<CartProduct> {
   ProducDetailsServices producDetailsServices = ProducDetailsServices();
+  CartServices cartServices = CartServices();
+
   increaseQantity({required Product product}) {
     producDetailsServices.addToCart(context: context, product: product);
+  }
+
+  decreaseQuanity({required Product product}) {
+    cartServices.removeFromCart(context: context, product: product);
   }
 
   @override
@@ -94,7 +101,7 @@ class _CartProductState extends State<CartProduct> {
                 child: Row(
                   children: [
                     InkWell(
-                      onTap: () {},
+                      onTap: () => decreaseQuanity(product: product),
                       child: Container(
                         width: 35.w,
                         height: 32.h,
