@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:amazon_clone/common/widgets/custom_button.dart';
+import 'package:amazon_clone/features/cart/widgets/cart_product.dart';
 import 'package:amazon_clone/features/cart/widgets/cart_subtotal.dart';
 import 'package:amazon_clone/features/home/widgets/address_box.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
@@ -95,24 +96,29 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            AddressBox(),
-            CartSubtotal(),
-            Padding(
-              padding: EdgeInsets.all(8.w),
-              child: CustomButton(
-                text: "Proceed to buy ${user.cart.length} item",
-                onTap: () {},
-                color: Colors.yellow[600],
-              ),
+      body: Column(
+        children: [
+          AddressBox(),
+          CartSubtotal(),
+          Padding(
+            padding: EdgeInsets.all(8.w),
+            child: CustomButton(
+              text: "Proceed to buy ${user.cart.length} item",
+              onTap: () {},
+              color: Colors.yellow[600],
             ),
-            SizedBox(height: 15.h),
-            Divider(),
-            SizedBox(height: 5.h),
-          ],
-        ),
+          ),
+          SizedBox(height: 15.h),
+          Divider(),
+          SizedBox(height: 5.h),
+          Expanded(
+            child: ListView.builder(
+                itemCount: user.cart.length,
+                itemBuilder: (context, index) {
+                  return CartProduct(index: index);
+                }),
+          )
+        ],
       ),
     );
   }
